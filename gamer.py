@@ -3,7 +3,7 @@ import os
 import time
 
 TILE_SPRITE_SCALING = 0.5
-PLAYER_SCALING = 0.1
+PLAYER_SCALING = 0.14
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -20,7 +20,7 @@ VIEWPORT_LEFT_MARGIN = 270
 
 # Physics
 MOVEMENT_SPEED = 5
-JUMP_SPEED = 18
+JUMP_SPEED = 22
 GRAVITY = 1.0
 
 def load_texture_pair(filename):
@@ -46,6 +46,13 @@ class MyGame(arcade.Window):
         # as mentioned at the top of this program.
         file_path = os.path.dirname(os.path.abspath(__file__))
         os.chdir(file_path)
+
+        self.state = 0
+        self.move_lock = 0
+        self.pat_text = "Get the fuck off my boat, scrub."
+        self.textx = 1050
+        self.texty = 155
+
 
         # Sprite lists
         self.wall_list = None
@@ -96,7 +103,7 @@ class MyGame(arcade.Window):
 
     def load_level(self, level):
         # Read in the tiled map
-        my_map = arcade.tilemap.read_tmx(f":resources:tmx_maps/level_{level}.tmx")
+        my_map = arcade.tilemap.read_tmx(f"assets/pat_map{level}.tmx")
 
         # --- Walls ---
 
@@ -104,10 +111,18 @@ class MyGame(arcade.Window):
         self.end_of_map = my_map.map_size.width * GRID_PIXEL_SIZE
 
         # Grab the layer of items we can't move through
+
+        self.coin_list = arcade.tilemap.process_layer(my_map,
+                                                      'Coins',
+                                                      TILE_SPRITE_SCALING,
+                                                      use_spatial_hash=True)
+
         self.wall_list = arcade.tilemap.process_layer(my_map,
                                                       'Platforms',
                                                       TILE_SPRITE_SCALING,
                                                       use_spatial_hash=True)
+        
+        
 
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite,
                                                              self.wall_list,
@@ -134,9 +149,10 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         # Draw all the sprites.
-        self.player_list.draw()
+        
         self.wall_list.draw()
         self.coin_list.draw()
+        self.player_list.draw()
 
         if self.last_time and self.frame_count % 60 == 0:
             fps = 1.0 / (time.time() - self.last_time) * 60
@@ -155,6 +171,9 @@ class MyGame(arcade.Window):
         output = f"Distance: {distance:.0f}"
         arcade.draw_text(output, self.view_left + 10, self.view_bottom + 20, arcade.color.BLACK, 14)
 
+        if self.move_lock == 1:
+            arcade.draw_text(self.pat_text, self.textx, self.texty, arcade.color.BLACK, 12)
+
         if self.game_over:
             arcade.draw_text("Game Over", self.view_left + 200, self.view_bottom + 200, arcade.color.BLACK, 30)
 
@@ -171,7 +190,6 @@ class MyGame(arcade.Window):
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
-
         if key == arcade.key.UP:
             self.up_pressed = False
         elif key == arcade.key.DOWN:
@@ -180,40 +198,78 @@ class MyGame(arcade.Window):
             self.left_pressed = False
         elif key == arcade.key.RIGHT:
             self.right_pressed = False
+        elif self.move_lock == 1 and self.state == 0:
+            self.pat_text = "Oh. Um, okay."
+            self.textx = 980
+            self.texty = 155
+            self.state = 1
+        elif self.move_lock == 1 and self.state == 1:
+            self.pat_text = "See ya."
+            self.textx = 1110
+            self.texty = 155
+            self.state = 2
+        elif self.move_lock == 1 and self.state == 2:
+            self.level = 2
+            self.move_lock = 0
+            self.player_sprite.center_x = 64
+            self.player_sprite.center_y = 128
+            self.pat_text = ""
+            self.load_level(self.level)
+            self.state = 3
+        elif self.move_lock == 1 and self.state == 3:
+            self.pat_text = "YEAH!"
+            self.textx = 940
+            self.texty = 870
+            self.state = 4
+        elif self.move_lock == 1 and self.state == 4:
+            self.pat_text = "Cool, let's go."
+            self.textx = 1010
+            self.texty = 870
+            self.state = 5
+        elif self.move_lock == 1 and self.state == 5:
+            self.level = 3
+            self.move_lock = 0
+            self.player_sprite.center_x = 64
+            self.player_sprite.center_y = 128
+            self.pat_text = ""
+            self.load_level(self.level)
+            self.state = 6
 
     def on_update(self, delta_time):
         """ Movement and game logic """
         self.player_sprite.change_x = 0
+        print("X: "+str(self.player_sprite.center_x)+", Y:"+str(self.player_sprite.center_y)+", State:"+str(self.state)+", MoveLOCK:"+str(self.move_lock))
+        if self.player_sprite.center_y < 50:
+            self.player_sprite.center_x = 64
+            self.player_sprite.center_y = 128
 
         if self.up_pressed and self.physics_engine.can_jump():
             self.player_sprite.change_y = JUMP_SPEED
         if self.left_pressed and not self.right_pressed:
             self.player_sprite.change_x = -MOVEMENT_SPEED
             self.player_sprite.texture = self.walk_pair[1]
+            if self.state == 6 and self.player_sprite.center_x <= 200 and self.player_sprite.center_y >= 990:
+                self.move_lock = 1
+                self.pat_text = "Nice Jumping. Wanna make out?"
+                self.textx = 20
+                self.texty = 1050
         elif self.right_pressed and not self.left_pressed:
             self.player_sprite.change_x = MOVEMENT_SPEED
+            if self.state < 3 and self.player_sprite.right > 1065:
+                self.move_lock = 1
+            if self.state == 3 and self.player_sprite.center_x >= 955 and self.player_sprite.center_y == 798.25:
+                self.move_lock = 1
+                self.pat_text = "Yo, wanna come to my cottage?"
+                self.textx = 1010
+                self.texty = 870
             self.player_sprite.texture = self.walk_pair[0]
 
-        if self.player_sprite.right >= self.end_of_map:
-            if self.level < self.max_level:
-                self.level += 1
-                self.load_level(self.level)
-                self.player_sprite.center_x = 128
-                self.player_sprite.center_y = 64
-                self.player_sprite.change_x = 0
-                self.player_sprite.change_y = 0
-            else:
-                self.game_over = True
-
+        if self.move_lock == 1:
+            self.player_sprite.change_x = 0
         # Call update on all sprites (The sprites don't do much in this
         # example though.)
         if not self.game_over:
             self.physics_engine.update()
-
-        coins_hit = arcade.check_for_collision_with_list(self.player_sprite, self.coin_list)
-        for coin in coins_hit:
-            coin.remove_from_sprite_lists()
-            self.score += 1
 
         # --- Manage Scrolling ---
 

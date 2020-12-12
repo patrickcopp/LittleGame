@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="21" height="20" tilewidth="128" tileheight="128" infinite="0" backgroundcolor="#8291e9" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" source="../../../../AppData/Local/Programs/Python/Python37-32/Lib/site-packages/arcade/resources/tmx_maps/standard_tileset.tsx"/>
+ <tileset firstgid="23" name="BOY" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="BOY.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="24" name="POG2" tilewidth="128" tileheight="128" tilecount="16" columns="4">
+  <image source="POG2.png" width="512" height="512"/>
+ </tileset>
+ <layer id="1" name="Platforms" width="21" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjALyAeMAm0ms2sFuphQQSxNpJjsQcyJhNixqZIFYDojliTATZB4rEDMjYRY0c8WBWBGIlYBYGYg5kOznQlIHE0c3D9lcmB4VIFYFYjUgVgdiAP5IAlM=
+  </data>
+ </layer>
+ <layer id="2" name="Coins" width="21" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMAoGHgAABpAAAQ==
+  </data>
+ </layer>
+ <layer id="3" name="Bombs" width="21" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMAoGHgAABpAAAQ==
+  </data>
+ </layer>
+</map>

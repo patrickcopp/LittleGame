@@ -315,7 +315,7 @@
  </tileset>
  <layer id="1" name="Platforms" width="60" height="20">
   <data encoding="base64" compression="zlib">
-   eJztlmEOgyAMhfFyxs3pnDrvZLy0mGlsECIFa2HhJe+PwWe/tCVmIixlkedjlXjjysfqDt6J+BsY3cH7lm6AP8TfPKsn5nysOHlrZJY6Jy7zkvrLkw9757PfhfR39cOjHlel/vKoE7+eh8z7FPtsQpfInIW1ks4967ERd38h67/zqqwh8W7381X/Xr04sobE6yq44zZ7zc3bGZ63Vxeyipp3mSvdHbu5Mrz3MpwfPOuh5lX3R+dRY+x5W1PzzvWVJoU=
+   eJztlusKwyAMhe3LjXW37v5OYy89wyYL2Up7tGm0eOD8sEjM1yRi4/JSU3h8VJW3rPio5uB9Kp+BaA7ezvvIfFI+cyifkuOjsuQ9gLFkn8T0S62vTXxeu5T5XnvfPm4T8olVra+NLu5d85x5N+7bm9xbMA6x7r1XifmMkXV9OevSeSVrTrzhfp7q7XV1v6w58caKz/iYubbmpZ67i29Um7NOOuq8lPu/OzY49BwXrXc9++W/QaXNK+enzw9mZC9qbd4XPpInNQ==
   </data>
  </layer>
  <layer id="2" name="Coins" width="60" height="20">

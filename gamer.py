@@ -7,7 +7,7 @@ PLAYER_SCALING = 0.14
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-SCREEN_TITLE = "Sprite Tiled Map with Levels Example"
+SCREEN_TITLE = "A Cute Lil Story"
 SPRITE_PIXEL_SIZE = 128
 GRID_PIXEL_SIZE = (SPRITE_PIXEL_SIZE * TILE_SPRITE_SCALING)
 
@@ -234,6 +234,29 @@ class MyGame(arcade.Window):
             self.pat_text = ""
             self.load_level(self.level)
             self.state = 6
+        elif self.move_lock == 1 and self.state == 4:
+            self.pat_text = "Cool, let's go."
+            self.textx = 1010
+            self.texty = 870
+            self.state = 5
+        elif self.move_lock == 1 and self.state == 6:
+            self.pat_text = "Guelph."
+            self.textx = 175
+            self.texty = 1050
+            self.state = 7
+        elif self.move_lock == 1 and self.state == 7:
+            self.pat_text = "Aight, say less."
+            self.textx = 45
+            self.texty = 1050
+            self.state = 8
+        elif self.move_lock == 1 and self.state == 8:
+            self.level = 4
+            self.move_lock = 0
+            self.player_sprite.center_x = 64
+            self.player_sprite.center_y = 128
+            self.pat_text = ""
+            self.load_level(self.level)
+            self.state = 9
 
     def on_update(self, delta_time):
         """ Movement and game logic """
@@ -250,8 +273,8 @@ class MyGame(arcade.Window):
             self.player_sprite.texture = self.walk_pair[1]
             if self.state == 6 and self.player_sprite.center_x <= 200 and self.player_sprite.center_y >= 990:
                 self.move_lock = 1
-                self.pat_text = "Nice Jumping. Wanna make out?"
-                self.textx = 20
+                self.pat_text = "Nice Jumping. Where you going next year?"
+                self.textx = 10
                 self.texty = 1050
         elif self.right_pressed and not self.left_pressed:
             self.player_sprite.change_x = MOVEMENT_SPEED

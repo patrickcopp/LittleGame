@@ -315,12 +315,12 @@
  </tileset>
  <layer id="1" name="Platforms" width="60" height="20">
   <data encoding="base64" compression="zlib">
-   eJztlmEOgyAMhfFyy9ycuk29lJcejZI1XYwWqIWFl7wfGiz9aEusTFqqMo/PVeHNKz5XZ/DOwntwdAZvZ90jP4X33Msn5/hcafK2zFi0T3z6pdRXJz6uXch8X63H1XVAPr4q9dXR2yw1T533Zr796XxnxgDWh/UlQj570q4vZv13XsqaEq+7n2P9ew3mlzUlXl/h+T4y19q80HMTeQe1ecmkI84LudP7Fdv1HBY8Nxvr6dlwJc1L52fLnG9CJM37AZaGHT4=
+   eJztmNsKgCAMhu2JI4pOdLjvqfPCiyk689gsPxiR4rafJksb5s/O7RB2gvEWMRtNQD5PSOG/VL2T5d0V6npjcYnnV/XCfQ33N1W9oXUbQonfN4SqN6//nsn7cHg5H+r+XSlJ7xbBB2W9HZNrfVTmZ24LsDVxPk94q55NcavePHFTA2sd1nlJemP8l1HS66sH9nCsf0+O+fjwt/6rO8vozjaQQ1mvzmPjtrjYmhhgdxGme4lWs97k1yduSm79ai+G
   </data>
  </layer>
  <layer id="2" name="Coins" width="60" height="20">
   <data encoding="base64" compression="zlib">
-   eJztzrEJACAQBEH7sSBtya5NDX1RHmEGLrtgSwHgNy07AOCynh0AB2p2AMCGsSzyje61CXenCn0=
+   eJztzDEKACAAAkDf09/6/xptIe1B3IHgogkAAAAAP5pHUn0blduuP15YaOkFWA==
   </data>
  </layer>
  <layer id="3" name="Bombs" width="60" height="20">

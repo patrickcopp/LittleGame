@@ -47,8 +47,8 @@ class MyGame(arcade.Window):
         file_path = os.path.dirname(os.path.abspath(__file__))
         os.chdir(file_path)
 
-        self.state = 0
-        self.move_lock = 0
+        self.state = 8
+        self.move_lock = 1
         self.pat_text = "Get the fuck off my boat, scrub."
         self.textx = 1050
         self.texty = 155
@@ -187,6 +187,8 @@ class MyGame(arcade.Window):
             self.left_pressed = True
         elif key == arcade.key.RIGHT:
             self.right_pressed = True
+        elif key == arcade.key.ESCAPE:
+            exit()
 
     def on_key_release(self, key, modifiers):
         """Called when the user releases a key. """
@@ -229,8 +231,6 @@ class MyGame(arcade.Window):
         elif self.move_lock == 1 and self.state == 5:
             self.level = 3
             self.move_lock = 0
-            self.player_sprite.center_x = 64
-            self.player_sprite.center_y = 128
             self.pat_text = ""
             self.load_level(self.level)
             self.state = 6
@@ -257,6 +257,16 @@ class MyGame(arcade.Window):
             self.pat_text = ""
             self.load_level(self.level)
             self.state = 9
+        elif self.move_lock == 1 and self.state == 9:
+            self.pat_text = "Nm, hbu."
+            self.textx = 1500
+            self.texty = 1120
+            self.state = 10
+        elif self.move_lock == 1 and self.state == 10:
+            self.pat_text = "I'm going to Toronto, I got a job."
+            self.textx = 1570
+            self.texty = 1120
+            self.state = 10
 
     def on_update(self, delta_time):
         """ Movement and game logic """
@@ -285,6 +295,11 @@ class MyGame(arcade.Window):
                 self.pat_text = "Yo, wanna come to my cottage?"
                 self.textx = 1010
                 self.texty = 870
+            if self.state == 9 and self.player_sprite.center_x >= 1530 and 1100 > self.player_sprite.center_y >= 1050:
+                self.move_lock = 1
+                self.pat_text = "Sup sexy."
+                self.textx = 1600
+                self.texty = 1120
             self.player_sprite.texture = self.walk_pair[0]
 
         if self.move_lock == 1:
